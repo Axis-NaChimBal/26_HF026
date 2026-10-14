@@ -69,22 +69,25 @@
 **📱 앱 화면**
 
 <p align="center">
-  <img src="📷앱-홈_이미지주소" width="160" alt="홈" />
-  <img src="📷앱-경로 생성_이미지주소" width="160" alt="경로 생성" />
-  <img src="📷앱-러닝 안내_이미지주소" width="160" alt="러닝 안내" />
-  <img src="📷앱-러닝 결과_이미지주소" width="160" alt="러닝 결과" />
-  <img src="📷앱-운동 기록_이미지주소" width="160" alt="운동 기록" />
+  <img src="https://github.com/user-attachments/assets/df38c314-0f97-42e5-bbcc-4af526684171" height="270" alt="스캔연동" />
+  <img src="https://github.com/user-attachments/assets/6fb4f74b-a55a-400e-9057-d46b25cd5835" height="270" alt="진동패턴" />
+  <img src="https://github.com/user-attachments/assets/e2023b7e-2f5f-48c7-a8e8-839896ce6e4b" height="270" alt="로그인" />
+  <img src="https://github.com/user-attachments/assets/80c2f7d0-52db-4d73-abf8-9ecc5f2a69b3" height="270" alt="홈" />
+  <img src="https://github.com/user-attachments/assets/e88fecd7-b36e-4bfb-b95b-a997a3d7a8df" height="270" alt="경로 생성" />
+  <img src="https://github.com/user-attachments/assets/7d16c155-a0c4-409b-9b47-028a8068ae04" height="270" alt="선택모달" />
 </p>
-<p align="center"><sub>홈 · 경로 생성 · 러닝 안내 · 러닝 결과 · 운동 기록</sub></p>
+<p align="center"><sub>밴드스캔 ·  진동패턴 · 로그인 · 홈 · 경로 생성</sub></p>
 
 <p align="center">
-  <img src="📷앱-GPS 아트 생성_이미지주소" width="160" alt="GPS 아트 생성" />
-  <img src="📷앱-GPS 아트 결과_이미지주소" width="160" alt="GPS 아트 결과" />
-  <img src="📷앱-아카이브_이미지주소" width="160" alt="아카이브" />
-  <img src="📷앱-챌린지_이미지주소" width="160" alt="챌린지" />
-  <img src="📷앱-AI 코치_이미지주소" width="160" alt="AI 코치" />
+  <img src="https://github.com/user-attachments/assets/b25fc93d-85bb-4636-b00f-95a7a1d8aabe" height="270" alt="러닝 안내" />
+  <img src="https://github.com/user-attachments/assets/b8dcee1a-67b6-48a2-b120-8ccea10aee02" height="270" alt="러닝 결과" />
+  <img src="https://github.com/user-attachments/assets/09e33738-f729-4fcf-bd48-466254b384f6" height="270" alt="GPS 아트 생성" />
+  <img src="https://github.com/user-attachments/assets/482eb9ab-4d98-4063-a2ff-1214afc1f632" height="270" alt="GPS 아트 명소" />
+  <img src="https://github.com/user-attachments/assets/88e64d46-70f0-4a14-b10b-66ff6eaec8de" height="270" alt="아카이브" />
+  <img src="https://github.com/user-attachments/assets/15cea68b-2227-4125-b5ce-0236f33c601d" height="270" alt="AI 코치" />
+  <img src="https://github.com/user-attachments/assets/340a0487-36d3-4a3a-9df7-bfe5f2b4435a" width="160" alt="운동 기록" />
 </p>
-<p align="center"><sub>GPS 아트 생성 · GPS 아트 결과 · 아카이브 · 챌린지 · AI 코치</sub></p>
+<p align="center"><sub>러닝 안내 · 러닝 결과 · GPS 아트 생성 · GPS 아트 명소 · 아카이브 · 챗봇 · 운동 기록</sub></p>
 
 **1-5. 기대 효과 및 활용 분야**
 - 기대 효과
@@ -138,7 +141,7 @@
 
 **3-3. 서비스 흐름도**
 
-<p align="center"><img src="📷서비스흐름도이미지주소" width="760" alt="서비스 흐름도" /></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/bd8ba176-9595-4545-ab28-6407289a864d" width="760" alt="서비스 흐름도" /></p>
 
 **3-4. AI 페이스 조절 알고리즘**
 
@@ -174,7 +177,7 @@ AI 서버 → BE 서버 : 라벨과 이상적인 페이스 값 반환
 
 **3-6. 엔티티 관계도 (ERD)**
 
-<p align="center"><img src="https://github.com/user-attachments/assets/4d4f21e8-2bf2-4065-bda0-da61f271d24d" width="760" alt="ERD" /></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/dd50594e-ed89-49fa-8372-8c63af1742d2" width="760" alt="ERD" /></p>
 
 `users` · `devices` · `routes` · `waypoints` · `exercise_sessions` · `exercise_results` · `pace_logs` · `route_deviation_logs` · `running_streaks` · `challenge_goals`
 
