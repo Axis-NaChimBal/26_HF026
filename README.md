@@ -2,9 +2,8 @@
 
 <!-- 📷 표시된 src="..." 부분을 GitHub에 올린 이미지 주소로 바꿔야함. (Ctrl+F로 "📷" 검색) -->
 
-# <img src="https://github.com/user-attachments/assets/76cfa072-70b9-40ba-a273-e2aa5743b24b" height="40" align="absmiddle" /> 나침발 : 스마트 러닝 밴드
-
-**AI 햅틱 러닝 밴드 & 앱**
+# <img src="https://github.com/user-attachments/assets/76cfa072-70b9-40ba-a273-e2aa5743b24b" height="40" align="absmiddle" /> 나침발 : AI HAPTIC RUNNING BAND
+**AI HAPTIC RUNNING BAND & 앱**
 
 `2026 한이음 드림업 공모전` · `26_HF026` · `Team Axis`
 
@@ -15,7 +14,7 @@
 ## **💡1. 프로젝트 개요**
 
 **1-1. 프로젝트 소개**
-- 프로젝트 명 : 나침발 (스마트 러닝 밴드)
+- 프로젝트 명 : 나침발 (AI HAPTIC RUNNING BAND)
 - 프로젝트 정의 : 러닝 중 화면을 보지 않고도 경로 안내와 운동 피드백을 받을 수 있는 **좌·우 분리형 햅틱 기반 스마트 러닝 밴드**와 이를 연동하는 모바일 앱
 - 스마트폰과 좌·우 손목 밴드를 BLE 통신으로 연결하여 **방향 전환, 경로 이탈, 페이스 조절** 정보를 진동으로 전달하고, 페이스 조절 및 GPS 아트 기능을 함께 제공합니다.
 
@@ -44,7 +43,8 @@
 - **실시간 대응 가능성 강화** : 화면 확인이 전제된 기본 서비스와 달리, 나침발은 진동만으로 방향·페이스·경로 이탈 정보를 즉시 전달하여 시선 분산없이 상황에 빠르게 대응할 수 있도록 합니다.
 
 **1-4. 주요 기능**
-
+<div align="center">
+  
 | 기능 | 설명 |
 |:---|:---|
 | 🔗 **햅틱 밴드 연동 및 상태 관리** |좌/우 밴드 동시 탐색·연결 및 연결 상태 실시간 확인. 런타임 안정성 관리 수행 |
@@ -55,9 +55,11 @@
 | 💬 **AI 러닝 코치 챗봇** | 누적 러닝 데이터를 주/월 단위 통계로 요약해 OpenAI API에 전달, 분석·훈련 계획 등 사용자 질문에 맞춤 응답 |
 | 🗺️ **경로 생성 및 MY 경로 아카이빙** | 지도에서 경유지(Waypoint)를 지정하면 T-map 보행자 API로 경로 생성, MY 경로 저장·즐겨찾기, GPS 아트 명소 조회 |
 | 🎨 **GPS 아트 경로 자동 생성** | 알고리즘을 통해 하트, 다각형 등 모양을 가진 GPS 아트 경로를 자동으로 생성. |
+</div>
 
 **🔔 진동 패턴**
-
+<div align="center">
+  
 | 상황 | 왼손 | 오른손 | 패턴 |
 |:---:|:---:|:---:|:---|
 | ⬅️ 좌회전 | ● | | 3회 진동 |
@@ -65,6 +67,7 @@
 | ⚠️ 경로 이탈 | ● | ● | 양손 2회 진동 |
 | 🏁 도착 | ● | ● | 양손 길게 1회 진동 |
 | 🏃 페이스 조절 | ● | ● | 목표 케이던스(SPM)에 맞춘 리듬 진동 |
+</div>
 
 **📱 앱 화면**
 
@@ -74,7 +77,6 @@
   <img src="https://github.com/user-attachments/assets/e2023b7e-2f5f-48c7-a8e8-839896ce6e4b" height="270" alt="로그인" />
   <img src="https://github.com/user-attachments/assets/80c2f7d0-52db-4d73-abf8-9ecc5f2a69b3" height="270" alt="홈" />
   <img src="https://github.com/user-attachments/assets/e88fecd7-b36e-4bfb-b95b-a997a3d7a8df" height="270" alt="경로 생성" />
-  <img src="https://github.com/user-attachments/assets/7d16c155-a0c4-409b-9b47-028a8068ae04" height="270" alt="선택모달" />
 </p>
 <p align="center"><sub>밴드스캔 ·  진동패턴 · 로그인 · 홈 · 경로 생성</sub></p>
 
@@ -84,10 +86,8 @@
   <img src="https://github.com/user-attachments/assets/09e33738-f729-4fcf-bd48-466254b384f6" height="270" alt="GPS 아트 생성" />
   <img src="https://github.com/user-attachments/assets/482eb9ab-4d98-4063-a2ff-1214afc1f632" height="270" alt="GPS 아트 명소" />
   <img src="https://github.com/user-attachments/assets/88e64d46-70f0-4a14-b10b-66ff6eaec8de" height="270" alt="아카이브" />
-  <img src="https://github.com/user-attachments/assets/15cea68b-2227-4125-b5ce-0236f33c601d" height="270" alt="AI 코치" />
-  <img src="https://github.com/user-attachments/assets/340a0487-36d3-4a3a-9df7-bfe5f2b4435a" width="160" alt="운동 기록" />
 </p>
-<p align="center"><sub>러닝 안내 · 러닝 결과 · GPS 아트 생성 · GPS 아트 명소 · 아카이브 · 챗봇 · 운동 기록</sub></p>
+<p align="center"><sub>러닝 안내 · 러닝 결과 · GPS 아트 생성 · GPS 아트 명소 · 아카이브</sub></p>
 
 **1-5. 기대 효과 및 활용 분야**
 - 기대 효과
@@ -121,10 +121,10 @@
 
 <div align="center">
 
-| <img width="80" height="80" src="https://github.com/mj12130.png" > | <img width="80" height="80" src="https://github.com/dalpaeng6.png" > | <img width="80" height="80" src="https://github.com/jujukim00.png" > | <img width="80" height="80" src="https://github.com/ssxbin.png" > | <img width="80" height="80" src="https://github.com/Jiae.png" > | <img width="80" height="80" src="https://github.com/멘토아이디.png" > |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| **멘티1** | **멘티2** | **멘티3** | **멘티4** | **멘티5** | **멘토** |
-| PM · FE · BE <br> HW <br> UI/UX 기획 | FE · BE <br> UI/UX 기획 | FE · BE <br> UI/UX 기획 | FE · BE <br> UI/UX 기획 | AI <br> 3D 모델링 <br> UI/UX 기획 | 자문 |
+| <img width="80" height="80" src="https://github.com/mj12130.png" > | <img width="80" height="80" src="https://github.com/dalpaeng6.png" > | <img width="80" height="80" src="https://github.com/jujukim00.png" > | <img width="80" height="80" src="https://github.com/ssxbin.png" > | <img width="80" height="80" src="https://github.com/Jiae.png" > |
+|:---:|:---:|:---:|:---:|:---:|
+| **멘티1** | **멘티2** | **멘티3** | **멘티4** | **멘티5** |
+| PM · FE · BE <br> HW <br> UI/UX 기획 | FE · BE <br> UI/UX 기획 | FE · BE <br> UI/UX 기획 | FE · BE <br> UI/UX 기획 | AI <br> 3D 모델링 <br> UI/UX 기획 |
 </div>
 
 ## **💡3. 시스템 구성도**
@@ -179,7 +179,7 @@ AI 서버 → BE 서버 : 라벨과 이상적인 페이스 값 반환
 
 <p align="center"><img src="https://github.com/user-attachments/assets/dd50594e-ed89-49fa-8372-8c63af1742d2" width="760" alt="ERD" /></p>
 
-`users` · `devices` · `routes` · `waypoints` · `exercise_sessions` · `exercise_results` · `pace_logs` · `route_deviation_logs` · `running_streaks` · `challenge_goals`
+`users` · `routes` · `route_favorites` · `waypoints` · `exercise_sessions` · `exercise_results` · `running_streaks` · `challenge_goals`
 
 ---
 
@@ -347,6 +347,5 @@ void handlePace(uint8_t label, float idealPace) {
 
 <div align="center">
 
-**<img src="https://github.com/user-attachments/assets/76cfa072-70b9-40ba-a273-e2aa5743b24b" height="24" align="absmiddle" /> 나침발** — 눈과 귀가 자유롭게, 러닝을 올바른 방향으로!
-
+**<img src="https://github.com/user-attachments/assets/76cfa072-70b9-40ba-a273-e2aa5743b24b" height="24" align="absmiddle" /> 나침발** — "Feel the Way, Find Your Pace."
 </div>
