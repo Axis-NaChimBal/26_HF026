@@ -141,7 +141,7 @@
 
 **3-3. 서비스 흐름도**
 
-<p align="center"><img src="https://github.com/user-attachments/assets/bd8ba176-9595-4545-ab28-6407289a864d" width="760" alt="서비스 흐름도" /></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/2e5d5ee3-39c4-4a80-8922-8a5c73c0bdca" width="760" alt="서비스 흐름도" /></p>
 
 **3-4. AI 페이스 조절 알고리즘**
 
@@ -177,7 +177,7 @@ AI 서버 → BE 서버 : 라벨과 이상적인 페이스 값 반환
 
 **3-6. 엔티티 관계도 (ERD)**
 
-<p align="center"><img src="https://github.com/user-attachments/assets/dd50594e-ed89-49fa-8372-8c63af1742d2" width="760" alt="ERD" /></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/ee58c485-d105-4bc9-a81c-55d53ed9c469" width="760" alt="ERD" /></p>
 
 `users` · `routes` · `route_favorites` · `waypoints` · `exercise_sessions` · `exercise_results` · `running_streaks` · `challenge_goals`
 
