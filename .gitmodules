@@ -10,3 +10,6 @@
 [submodule "NaChimBal_AI"]
 	path = NaChimBal_AI
 	url = https://github.com/Axis-NaChimBal/NaChimBal_AI.git
+[submodule "NaChimBal_FE"]
+	path = NaChimBal_FE
+	url = https://github.com/Axis-NaChimBal/NaChimBal_FE.git
