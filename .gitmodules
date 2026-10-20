@@ -1,0 +1,6 @@
+[submodule "NaChimBal_HW"]
+	path = NaChimBal_HW
+	url = https://github.com/Axis-NaChimBal/NaChimBal_HW.git
+[submodule "NaChimBal_BE"]
+	path = NaChimBal_BE
+	url = https://github.com/Axis-NaChimBal/NaChimBal_BE.git
