@@ -198,13 +198,19 @@ AI 서버 → BE 서버 : 라벨과 이상적인 페이스 값 반환
 
 ## **💡5. 핵심 소스코드**
 
-**5-1. 햅틱 경로 안내 로직 (Frontend · JavaScript)**
-  - **도착 판정** : 마지막 구간에서 목적지 반경 안에 들어오면 이탈 판정보다 먼저 도착 처리합니다.
-  - **다음 회전 포인트(구간) 진입** : 단순히 반경 안에 들어왔는지만 보지 않고, 현재 지점보다 다음 지점이 더 가까워졌는지(방향성)까지 함께 확인해 오탐을 막습니다.
-  - **이탈 확정** : 경로와의 최소 거리가 기준치를 **연속 3회** 넘을 때만 이탈로 확정해, 순간적인 GPS 오차에도 안내가 끊기지 않도록 했습니다.
+**5-1. FE 코드 : 경로 안내**
+- 소스코드 설명
+  1. **도착 판정**
+     - 목적지반경 이내 진입 시 즉시 도착 처리
+     - 별도 이탈 판정 없이 최우선으로 확인
+  2. **다음 회전 포인트(구간) 진입**
+     - 다음 회전 지점까지의 거리가 반경 이내로 좁혀지고, 현재 지점보다 다음 지점이 더 가까워진 순간 구간 전환
+     - 단순 반경 진입이 아닌 "가까워지는 방향성"까지 함께 확인해 오탐 방지
+  3. **3회 초과 시 이탈 확정**
+     - 경로 전체 선분과의 최소거리가 기준치 초과 시 연속 3회 초과할 때만 이탈로 확정
+     - GPS 순간 오차·일시적 반경 이탈 시에도 안내 유지되도록 설계
 
 ```javascript
-// 1. 도착 판정 : 목적지 반경 이내 진입 시 이탈 판정 없이 최우선으로 도착 처리
 const lastStep      = this.steps[this.steps.length - 1];
 const isLastSegment = this.segmentIndex >= this.steps.length - 2;
 const distToArrival = haversine(lat, lng, lastStep.pointY, lastStep.pointX);
@@ -212,33 +218,33 @@ const distToArrival = haversine(lat, lng, lastStep.pointY, lastStep.pointX);
 if (isLastSegment && distToArrival < this.noticeRadius) {
   return { isDeviated: false, currentSegmentIndex: this.segmentIndex, isArrived: true };
 }
+```
 
-// 2. 다음 회전 포인트(구간) 진입 : "반경 진입 + 가까워지는 방향성"을 함께 확인
+```javascript
 const currentStep = this.steps[this.segmentIndex];
 const nextStep    = this.steps[this.segmentIndex + 1];
 
 if (nextStep) {
   const distToNext = haversine(lat, lng, nextStep.pointY, nextStep.pointX);
+  console.log(`[NEXT] distToNext=${distToNext.toFixed(1)}m radius=${this.noticeRadius}`);
 
   // 다음 포인트 진입 체크 -> prevDistToNext와 비교해 "이전보다 가까워지고 있는가"로 판단
   const approaching =
     this.prevDistToNext === null || distToNext < this.prevDistToNext;
 
-  const distToCurrent = haversine(lat, lng, currentStep.pointY, currentStep.pointX);
+    const distToCurrent = haversine(lat, lng, currentStep.pointY, currentStep.pointX);
 
-  if (distToNext < this.noticeRadius && distToCurrent > distToNext) {
+    if (distToNext < this.noticeRadius && distToCurrent > distToNext) {
     this.segmentIndex += 1;
     this.deviationCount = 0;
     this.prevDistToNext = null;
     this.distanceIncreaseCount = 0;
-    // ...
-  }
-}
+```
 
-// 3. 이탈 확정 : 경로와의 최소 거리가 기준치를 연속 3회 초과할 때만 이탈로 확정
+```javascript
 if (minDist > this.deviationThreshold) {
   this.deviationCount += 1;
-  if (this.deviationCount >= this.consecutiveRequired) { // 3회 이상 감지 시 이탈 확정
+  if (this.deviationCount >= this.consecutiveRequired) { //3회 이상 감지 시 이탈 확정
     this.isCurrentlyDeviated = true;
     // deviationCount 리셋 안 함 → 이탈 상태 유지
     return { isDeviated: true, currentSegmentIndex: this.segmentIndex, isArrived: false };
@@ -246,14 +252,17 @@ if (minDist > this.deviationThreshold) {
 } else {
   this.deviationCount = 0;
   this.isCurrentlyDeviated = false; // 복귀
-}
 ```
 
-**5-2. BLE 통신 및 명령 처리 (Hardware · ESP32-C3 / C++)**
-- 소스코드 설명 : **WRITE(명령 수신)** 와 **NOTIFY(심박 전송)** 두 개의 Characteristic으로 스마트폰과 밴드 간 양방향 통신을 구성했습니다. 1바이트 command 값에 따라 방향 안내, 역할 설정(심박 측정 활성/비활성), 페이스 조절, 보폭 설정 명령을 처리하며, 연결이 끊기면 진동을 자동으로 멈추고 광고를 재시작해 자동 재연결되도록 했습니다.
+**5-2. HW 코드 : BLE/심박 수집/진동 모듈 제어 (1)**
+- 소스코드 설명
+  1. **블루투스 연동 및 제어**
+     - WRITE(명령 수신)·NOTIFY(심박 전송) 2개 Characteristic으로 양방향 통신 구조 구성
+     - 1바이트 command 기준 switch 분기로 방향 안내·역할 설정·페이스·세션 종료·보폭 5종 명령 처리
+     - 연결 해제 시 진동 자동 정지 + 광고 재시작(자동 재연결)
 
 ```cpp
-// [BLE 초기화 및 Characteristic 등록]
+// [BLE 초기화 및 Characteristic 등록] ①
 BLEDevice::init(DEVICE_NAME);
 BLEServer* pServer = BLEDevice::createServer();
 pServer->setCallbacks(new ServerCallbacks());
@@ -271,36 +280,45 @@ pHeartRateChar = pService->createCharacteristic(
   HEARTRATE_CHAR_UUID,
   BLECharacteristic::PROPERTY_NOTIFY
 );
+```
 
+```cpp
 // [커맨드 수신 및 제어 분기]
 switch (command) {
-  case COMMAND_VIBRATE:     // 0x01: 방향 안내 햅틱
+  case COMMAND_VIBRATE:    // 0x01: 방향 안내 햅틱
     handlePattern(param1, param2, param3);
     break;
-  case COMMAND_SET_ROLE:    // 0x02: 심박 활성/비활성 지정
+  case COMMAND_SET_ROLE:   // 0x02: 심박 활성/비활성 지정
     hrRole = param1;
     break;
-  case COMMAND_PACE:        // 0x03: 페이스 조절 햅틱
+  case COMMAND_PACE:       // 0x03: 페이스 조절 햅틱
     handlePace(param1, idealPace);
     break;
-  case COMMAND_SET_STRIDE:  // 0x05: 보폭 설정
+  case 0x04:               // 0x04: 세션 종료 (진동 중지 + 심박 비활성)
+    stopPaceHaptic();
+    hrRole = ROLE_HR_INACTIVE;
+    break;
+  case COMMAND_SET_STRIDE: // 0x05: 보폭 설정
     STRIDE_LENGTH = strideMm / 1000.0f;
     break;
 }
 ```
 
-**5-3. 심박 수집 및 햅틱 진동 제어 (Hardware · ESP32-C3 / C++)**
-- 소스코드 설명 : MAX30102 센서 값 중 정상 범위만 걸러 최근 5개 값의 이동평균을 5초마다 전송해 노이즈를 줄입니다. 방향 안내는 DRV2605L 햅틱 드라이버의 패턴으로 구분하고, 페이스 조절은 AI가 산출한 이상적인 페이스를 **사용자 보폭 기반 케이던스(SPM)** 로 환산해 진동 간격을 계산합니다. 정상 페이스일 때는 진동을 멈추고, OVER/UNDER 상태에서만 진동합니다.
+**5-3. HW 코드 : BLE/심박 수집/진동 모듈 제어 (2)**
+- 소스코드 설명
+  2. **심박 데이터 수집**
+     - MAX30102 센서로 4초 주기 측정, 정상 범위만 유효값 필터링
+     - 최근 5개 유효값 버퍼에 저장 후 이동평균 계산 → 노이즈 완화
+     - 5초 주기로 BLE Notify 전송
 
 ```cpp
-// [심박 데이터 수집] 정상 범위 값만 버퍼에 저장
-if (now - lastSensorRead >= SENSOR_READ_INTERVAL) {
+if (now - lastSensorRead >= SENSOR_READ_INTERVAL) {  // 4초마다 측정
   lastSensorRead = now;
   MAX30102.getHeartbeatSPO2();
   int hr   = MAX30102._sHeartbeatSPO2.Heartbeat;
   int spo2 = MAX30102._sHeartbeatSPO2.SPO2;
 
-  if (hr > 50 && hr < 120 && spo2 > 50 && spo2 <= 100) { // 유효값 필터링
+  if (hr > 30 && hr < 220 && spo2 > 50 && spo2 <= 100) {  // 유효값 필터링
     hrBuffer[hrBufIndex] = hr;
     hrBufIndex = (hrBufIndex + 1) % HR_BUFFER_SIZE;
     if (hrValidCount < HR_BUFFER_SIZE) hrValidCount++;
@@ -314,32 +332,6 @@ if (now - lastReport >= REPORT_INTERVAL) {  // 5초마다 이동평균 계산 �
   finalHR = sum / hrValidCount;
   pHeartRateChar->setValue(hrPacket, 2);
   pHeartRateChar->notify();
-}
-
-// [방향 안내 패턴 처리]
-void handlePattern(uint8_t patternId, uint8_t intensity, uint8_t repeat) {
-  switch (patternId) {
-    case PATTERN_TURN_LEFT:
-    case PATTERN_TURN_RIGHT:
-      playEffect(EFFECT_TRIPLE_CLICK, repeat, 300);  // Triple Click ×3
-      break;
-    case PATTERN_DEVIATED:
-      playEffect(EFFECT_DOUBLE_CLICK, repeat, 300);  // Double Click ×2
-      break;
-    case PATTERN_ARRIVED:
-      playEffect(EFFECT_LONG_ALERT, repeat, 1200);   // 1000ms Alert
-      break;
-  }
-}
-
-// [페이스 조절 → 케이던스 진동 간격 계산]
-void handlePace(uint8_t label, float idealPace) {
-  if (label == LABEL_NORMAL) { stopPaceHaptic(); return; }
-
-  float speedMps = 1000.0f / (idealPace * 60.0f);  
-  float spm = (speedMps / STRIDE_LENGTH) * 60.0f;
-  hapticPaceInterval = (int)(120000.0f / spm);
-  hapticPaceActive = true;
 }
 ```
 
