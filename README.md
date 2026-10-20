@@ -334,6 +334,44 @@ if (now - lastReport >= REPORT_INTERVAL) {  // 5초마다 이동평균 계산 �
   pHeartRateChar->notify();
 }
 ```
+**5-4. HW 코드 : BLE/심박 수집/진동 모듈 제어 (3)**
+- 소스코드 설명
+  3. **진동 모듈 제어**
+     - DRV2605 햅틱 드라이버로 패턴별 진동 제어
+     - 경로 안내는 RTP 모드의 400ms 긴 진동, 페이스 유도는 짧은 클릭으로 질감 분리
+     - 경로 안내 재생 중과 앞뒤 300ms는 페이스 진동을 멈춰 신호 혼동 방지
+     - 목표 페이스를 보폭 기반 SPM으로 환산해 진동 간격 계산 → 케이던스 방식 페이스 유도
+     - 정상 페이스 상태에서는 진동 중지, OVER/UNDER 상태에서만 진동 활성화
+
+```cpp
+// [방향 안내 패턴 처리]
+void handlePattern(uint8_t patternId, uint8_t intensity, uint8_t repeat) {
+  switch (patternId) {
+    case PATTERN_TURN_LEFT:
+    case PATTERN_TURN_RIGHT:
+      playLongPulses(TURN_CLICK_COUNT);      // 400ms 긴 진동 x3
+      break;
+    case PATTERN_DEVIATED:
+      playLongPulses(DEVIATED_CLICK_COUNT);  // 400ms 긴 진동 x2
+      break;
+    case PATTERN_ARRIVED:
+      playEffect(EFFECT_LONG_ALERT, repeat, 1200);
+      break;
+  }
+}
+```
+
+```cpp
+// [페이스 조절 → 케이던스 진동 간격 계산]
+void handlePace(uint8_t label, float idealPace) {
+  if (label == LABEL_NORMAL) { stopPaceHaptic(); return; }
+
+  float speedMps = 1000.0f / (idealPace * 60.0f);
+  float spm = (speedMps / STRIDE_LENGTH) * 60.0f;
+  hapticPaceInterval = (int)(120000.0f / spm);
+  hapticPaceActive = true;
+}
+```
 
 ---
 
