@@ -4,3 +4,9 @@
 [submodule "NaChimBal_BE"]
 	path = NaChimBal_BE
 	url = https://github.com/Axis-NaChimBal/NaChimBal_BE.git
+[submodule "NaChimBal_GpsArtServer"]
+	path = NaChimBal_GpsArtServer
+	url = https://github.com/Axis-NaChimBal/NaChimBal_GpsArtServer.git
+[submodule "NaChimBal_AI"]
+	path = NaChimBal_AI
+	url = https://github.com/Axis-NaChimBal/NaChimBal_AI.git
