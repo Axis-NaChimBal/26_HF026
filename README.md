@@ -2,7 +2,7 @@
 
 <!-- 📷 표시된 src="..." 부분을 GitHub에 올린 이미지 주소로 바꿔야함. (Ctrl+F로 "📷" 검색) -->
 
-# <img src="https://github.com/user-attachments/assets/76cfa072-70b9-40ba-a273-e2aa5743b24b" height="40" align="absmiddle" /> 나침발 : AI HAPTIC RUNNING BAND
+# <img src="https://github.com/user-attachments/assets/76cfa072-70b9-40ba-a273-e2aa5743b24b" height="40" align="absmiddle" /> 나침발: 스마트 러닝밴드
 **AI HAPTIC RUNNING BAND & 앱**
 
 `2026 한이음 드림업 공모전` · `26_HF026` · `Team Axis`
@@ -14,7 +14,7 @@
 ## **💡1. 프로젝트 개요**
 
 **1-1. 프로젝트 소개**
-- 프로젝트 명 : 나침발 (AI HAPTIC RUNNING BAND)
+- 프로젝트 명 :나침발: 스마트 러닝밴드
 - 프로젝트 정의 : 러닝 중 화면을 보지 않고도 경로 안내와 운동 피드백을 받을 수 있는 **좌·우 분리형 햅틱 기반 스마트 러닝 밴드**와 이를 연동하는 모바일 앱
 - 스마트폰과 좌·우 손목 밴드를 BLE 통신으로 연결하여 **방향 전환, 경로 이탈, 페이스 조절** 정보를 진동으로 전달하고, 페이스 조절 및 GPS 아트 기능을 함께 제공합니다.
 
